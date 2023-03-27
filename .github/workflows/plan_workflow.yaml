@@ -86,23 +86,26 @@ jobs:
         with:
           sarif_file: results.sarif
 
-  tfsec:
-    name: Tfsec Scan
+  terrascan:
+    name: Terrascan Scan
     runs-on: ubuntu-latest
-    permissions:
-      security-events: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Tfsec Scan
-        id: tfsec
-        uses: aquasecurity/tfsec-action@v1.0.0
+      - name: Terrascan Scan
+        id: terrascan
+        uses: tenable/terrascan-action@main
         with:
-          version: latest
-          format: sarif
+          iac_type: terraform
+          iac_version: v14
+          policy_type: azure
+          only_warn: true
+          sarif_upload: true
 
-      - run: |
-          pwd
-          ls -al
+      - name: Upload SARIF file
+        id: terrascan-upload
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: terrascan.sarif
