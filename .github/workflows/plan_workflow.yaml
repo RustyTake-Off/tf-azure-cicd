@@ -30,7 +30,7 @@ jobs:
       - name: Installing Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform-version: latest
+          terraform_version: latest
 
       - name: Terraform Init
         id: init
