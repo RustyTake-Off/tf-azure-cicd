@@ -15,10 +15,12 @@
 
 ##################################################
 # Module caf - variables
-variable "global_settings" {
-  description = "Configuration object - global_settings"
+variable "global" {
+  description = "Configuration - global"
+  default = {
+    suffix   = "08pro"
+    location = "westeurope"
+    rg_aks   = "aks"
+  }
 }
 
-variable "resource_groups" {
-  description = "Configuration object - resource_groups"
-}
