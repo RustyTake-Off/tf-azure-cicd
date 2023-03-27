@@ -30,6 +30,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Installing Terraform
         uses: hashicorp/setup-terraform@v2
         with:
@@ -51,6 +56,3 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: terraform plan -input=false -var-file=./infra_variables/${{ env.environment }}.tfvars
-        env:
-          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
