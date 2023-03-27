@@ -16,6 +16,9 @@ defaults:
     shell: bash
     working-directory: infra
 
+permissions:
+  contents: read
+
 env:
   environment: prod
 
@@ -59,7 +62,6 @@ jobs:
     name: Checkov Scan
     runs-on: ubuntu-latest
     permissions:
-      contents: read
       security-events: write
 
     steps:
@@ -71,7 +73,6 @@ jobs:
         uses: bridgecrewio/checkov-action@v12
         continue-on-error: true
         with:
-          direstory: infra
           # This will add both a CLI output to the console and create a results.sarif file
           output_format: cli,sarif
           output_file_path: console,results.sarif
