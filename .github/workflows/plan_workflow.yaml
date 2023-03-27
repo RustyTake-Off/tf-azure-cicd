@@ -1,6 +1,6 @@
 ########################################
 # Workflow for checking terraform code
-name: Terraform Workflow
+name: Terraform
 
 on:
   push:
@@ -9,9 +9,7 @@ on:
   pull_request:
     branches:
       - main
-
-permissions:
-  contents: read
+  workflow_dispatch:
 
 defaults:
   run:
@@ -22,8 +20,8 @@ env:
   environment: prod
 
 jobs:
-  install-terraform:
-    name: Install Terraform
+  validate:
+    name: Validate Code
     runs-on: ubuntu-latest
 
     steps:
@@ -56,3 +54,31 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: terraform plan -input=false -var-file=./infra_variables/${{ env.environment }}.tfvars
+
+  checkov:
+    name: Checkov Scan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Checkov Scan
+        id: checkov
+        uses: bridgecrewio/checkov-action@v12
+        continue-on-error: true
+        with:
+          direstory: infra
+          # This will add both a CLI output to the console and create a results.sarif file
+          output_format: cli,sarif
+          output_file_path: console,results.sarif
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v2
+        # Results are generated only on a success or failure
+        if: success() || failure()
+        with:
+          sarif_file: results.sarif
