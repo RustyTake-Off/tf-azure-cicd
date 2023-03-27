@@ -30,9 +30,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Azure Login
-        uses: azure/login@v1
-
       - name: Az CLI
         run: |
           az login -u ${{ secrets.AZURE_CRED_U }} -p ${{ secrets.AZURE_CRED_P }} &>/dev/null
