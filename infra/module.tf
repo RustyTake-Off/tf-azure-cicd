@@ -1,12 +1,16 @@
 ##################################################
 # Module caf - configuration
-module "caf" {
-  source  = "aztfmod/caf/azurerm"
-  version = "~> 5.5.0"
-  providers = {
-    azurerm.vhub = azurerm
-  }
+# module "caf" {
+#   source  = "aztfmod/caf/azurerm"
+#   version = "~> 5.5.0"
+#   providers = {
+#     azurerm.vhub = azurerm
+#   }
 
-  global_settings = var.global_settings
-  resource_groups = var.resource_groups
+#   global_settings = var.global_settings
+#   resource_groups = var.resource_groups
+# }
+resource "azurerm_resource_group" "this" {
+  name     = var.resource_groups.rg_aks.name
+  location = "westeurope"
 }
