@@ -18,6 +18,9 @@ defaults:
     shell: bash
     working-directory: infra
 
+env:
+  environment: prod
+
 jobs:
   install-terraform:
     name: Install Terraform
@@ -47,7 +50,7 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -input=false
+        run: terraform plan -input=false -var-file=./infra/${{ env.environment }}.tfvars
         env:
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
