@@ -5,7 +5,7 @@ terraform {
   ##################################################
   # Required Terraform version 
   required_version = ">= 1.3.0, < 2.0.0"
-  # again
+
   ##################################################
   # Required providers
   required_providers {
