@@ -89,6 +89,8 @@ jobs:
   terrascan:
     name: Terrascan Scan
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write
 
     steps:
       - name: Checkout repository
@@ -98,9 +100,9 @@ jobs:
         id: terrascan
         uses: tenable/terrascan-action@main
         with:
-          iac_type: terraform
-          iac_version: v14
-          policy_type: azure
+          iac_type: "terraform"
+          iac_version: "v14"
+          policy_type: "azure"
           only_warn: true
           sarif_upload: true
 
