@@ -23,6 +23,7 @@ env:
   environment: prod
 
 jobs:
+  # Terraform Job
   validate:
     name: Validate Code
     runs-on: ubuntu-latest
@@ -31,33 +32,40 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Login to Azure
       - name: Az CLI
         run: |
           az login -u ${{ secrets.AZURE_CRED_U }} -p ${{ secrets.AZURE_CRED_P }} &>/dev/null
           az version
 
+      # Installing Terraform
       - name: Installing Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: latest
 
+      # Terraform Init
       - name: Terraform Init
         id: init
         run: terraform init -backend=false
 
+      # Terraform Format
       - name: Terraform Format
         id: fmt
         run: terraform fmt -check -recursive
         continue-on-error: true
 
+      # Terraform Validate
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
 
+      # Terraform Plan
       - name: Terraform Plan
         id: plan
-        run: terraform plan -input=false -var-file=./infra_variables/${{ env.environment }}.tfvars
+        run: terraform plan -input=false
 
+  # Checkov Job
   checkov:
     name: Checkov Scan
     runs-on: ubuntu-latest
@@ -68,6 +76,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Checkov Scan
       - name: Checkov Scan
         id: checkov
         uses: bridgecrewio/checkov-action@v12
@@ -78,6 +87,7 @@ jobs:
           output_format: cli,sarif
           output_file_path: console,results.sarif
 
+      # Upload Checkov Scan
       - name: Upload SARIF file
         id: checkov-upload
         uses: github/codeql-action/upload-sarif@v2
@@ -86,6 +96,7 @@ jobs:
         with:
           sarif_file: results.sarif
 
+  # Terrascan Job
   terrascan:
     name: Terrascan Scan
     runs-on: ubuntu-latest
@@ -96,6 +107,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Terrascan Scan
       - name: Terrascan Scan
         id: terrascan
         uses: tenable/terrascan-action@main
@@ -106,6 +118,7 @@ jobs:
           only_warn: true
           sarif_upload: true
 
+      # Upload Terrascan Scan
       - name: Upload SARIF file
         id: terrascan-upload
         uses: github/codeql-action/upload-sarif@v2
