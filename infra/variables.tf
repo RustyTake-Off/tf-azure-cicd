@@ -14,7 +14,7 @@
 # }
 
 ##################################################
-# Module caf - variables
+# Resources - variables
 variable "global" {
   description = "Configuration - global"
   default = {
