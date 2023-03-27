@@ -3,8 +3,21 @@
 terraform {
 
   ##################################################
-  # Backend configuration taken from *.backend.tfvars file
-  # backend "azurerm" {}
+  # Required Terraform version 
+  required_version = ">= 1.3.0, < 2.0.0"
+  # again
+  ##################################################
+  # Required providers
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 3.0.0"
+    }
+
+    ##################################################
+    # Backend configuration taken from *.backend.tfvars file
+    # backend "azurerm" {}
+  }
 }
 
 ##################################################
