@@ -1,8 +1,8 @@
 # Script for creating prerequisites.
-$resource_group = "rgpr08pro"
+$resource_group = "rgprpro08"
 $location = "westeurope"
-$storage_account = "strapr08pro"
-$container = "contpr08pro"
+$storage_account = "straprpro08"
+$container = "contprpro08"
 
 # Resource group
 az group create --name $resource_group --location $location
