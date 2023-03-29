@@ -60,7 +60,7 @@ jobs:
       # Terraform Plan
       - name: Terraform Plan
         id: plan
-        run: terraform plan -input=false -var '${{ secrets.SSH }}'
+        run: terraform plan -input=false -var '${{ secrets.SSH }}' -var-files 'infra_variables/prod.tfvars'
 
   # Checkov Job
   checkov:
