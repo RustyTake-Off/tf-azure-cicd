@@ -53,6 +53,7 @@ resource "azurerm_kubernetes_cluster" "this" {
   dns_prefix          = lower("aks${var.global.suffix}")
 
   kubernetes_version               = var.aks.kube_version
+  azure_policy_enabled             = true
   automatic_channel_upgrade        = var.aks.auto_channel_upgrade
   sku_tier                         = var.aks.sku_tier
   http_application_routing_enabled = try(var.aks.AksHTTPAppRouting, false)

@@ -55,5 +55,6 @@ variable "aks" {
 
 variable "ssh" {
   description = "Configuration - ssh variables"
+  sensitive   = true
   default     = {}
 }

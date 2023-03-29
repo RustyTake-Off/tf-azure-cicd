@@ -19,9 +19,6 @@ defaults:
 permissions:
   contents: read
 
-env:
-  environment: prod
-
 jobs:
   # Terraform Job
   validate:
@@ -63,7 +60,7 @@ jobs:
       # Terraform Plan
       - name: Terraform Plan
         id: plan
-        run: terraform plan -input=false
+        run: terraform plan -input=false -var ${{ secrets.SSH }}
 
   # Checkov Job
   checkov:
