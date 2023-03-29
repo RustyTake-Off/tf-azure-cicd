@@ -11,7 +11,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.0.0"
+      version = "~> 3.0"
     }
 
     ##################################################
@@ -28,10 +28,10 @@ terraform {
 ##################################################
 # Providers configurations
 provider "azurerm" {
-  # client_id       = var.ARM_CLIENT_ID
-  # client_secret   = var.ARM_CLIENT_SECRET
-  # subscription_id = var.ARM_SUBSCRIPTION_ID
-  # tenant_id       = var.ARM_TENANT_ID
+  # client_id       = var.client_id
+  # client_secret   = var.client_secret
+  # subscription_id = var.subscription_id
+  # tenant_id       = var.tenant_id
 
   features {}
 }
