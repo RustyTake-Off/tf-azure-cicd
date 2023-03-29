@@ -80,9 +80,9 @@ jobs:
         continue-on-error: true
         with:
           framework: terraform
-          # This will add both a CLI output to the console and create a results.sarif file
-          output_format: github_failed_only,sarif
-          output_file_path: results.sarif
+          # This will create a checkov.sarif file
+          output_format: sarif
+          output_file_path: checkov.sarif
 
       # Upload Checkov Scan
       - name: Upload SARIF file
@@ -91,7 +91,7 @@ jobs:
         # Results are generated only on a success or failure
         if: success() || failure()
         with:
-          sarif_file: results.sarif
+          sarif_file: checkov.sarif
 
   # Terrascan Job
   terrascan:
