@@ -81,8 +81,8 @@ jobs:
         with:
           framework: terraform
           # This will add both a CLI output to the console and create a results.sarif file
-          output_format: cli,sarif
-          output_file_path: console,results.sarif
+          output_format: github_failed_only,sarif
+          output_file_path: results.sarif
 
       # Upload Checkov Scan
       - name: Upload SARIF file
