@@ -1,15 +1,15 @@
 ##################################################
 # Static variables
-# variable "ARM_CLIENT_ID" {
+# variable "client_id" {
 #   sensitive = true
 # }
-# variable "ARM_CLIENT_SECRET" {
+# variable "client_secret" {
 #   sensitive = true
 # }
-# variable "ARM_SUBSCRIPTION_ID" {
+# variable "subscription_id" {
 #   sensitive = true
 # }
-# variable "ARM_TENANT_ID" {
+# variable "tenant_id" {
 #   sensitive = true
 # }
 
@@ -18,7 +18,7 @@
 variable "global" {
   description = "Configuration - global variables"
   default = {
-    suffix   = "08pro"
+    suffix   = "pro08"
     location = "westeurope"
     name     = "aks"
   }
@@ -56,5 +56,12 @@ variable "aks" {
 variable "ssh" {
   description = "Configuration - ssh variables"
   sensitive   = true
-  default     = {}
+  type = object({
+    admin   = string
+    ssh_key = string
+  })
+  default = {
+    admin   = null
+    ssh_key = null
+  }
 }
