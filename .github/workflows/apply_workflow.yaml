@@ -9,10 +9,10 @@ on:
   workflow_dispatch:
     inputs:
       apply:
-        description: "Run Terraform Apply"
+        description: "Run Terraform Apply / 'true' - to run / leave empty to not run"
         default: ""
       destroy:
-        description: "Run Terraform Destroy"
+        description: "Run Terraform Destroy / 'true' - to run / leave empty to not run"
         default: ""
 
 defaults:
@@ -70,14 +70,15 @@ jobs:
       - name: Terraform Apply
         id: apply
         run: terraform apply -auto-approve -input=false -var '${{ secrets.SSH }}' -var-file 'infra_variables/prod.tfvars'
-        if: ${{ github.event.inputs.apply == 'apply' }}
+        if: ${{ github.event.inputs.apply == 'true' }}
 
       - name: Delay
         run: |
           sleep 20s
+        if: ${{ github.event.inputs.apply == 'true' }}
 
       # Terraform Destroy
       - name: Terraform Destroy
         id: destroy
         run: terraform destroy -auto-approve -input=false -var '${{ secrets.SSH }}' -var-file 'infra_variables/prod.tfvars'
-        if: ${{ github.event.inputs.destroy == 'destroy' }}
+        if: ${{ github.event.inputs.destroy == 'true' }}
