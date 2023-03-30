@@ -44,7 +44,7 @@ jobs:
       # Terraform Init
       - name: Terraform Init
         id: init
-        run: terraform init -backend=false
+        run: terraform init
 
       # Terraform Format
       - name: Terraform Format

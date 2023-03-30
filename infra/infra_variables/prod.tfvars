@@ -1,7 +1,7 @@
 global = {
-  suffix   = "pro99"
+  suffix   = "pro08"
   location = "westeurope"
-  name     = "default"
+  name     = "aks"
 }
 
 network = {
