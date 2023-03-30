@@ -1,2 +1,65 @@
 ########################################
 # Workflow for applying terraform code
+name: Terraform Apply
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+    working-directory: infra
+
+permissions:
+  contents: read
+
+jobs:
+  # Terraform Job
+  validate:
+    name: Apply Code
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Login to Azure
+      - name: Az CLI
+        run: |
+          az login -u ${{ secrets.AZURE_CRED_U }} -p ${{ secrets.AZURE_CRED_P }} &>/dev/null
+          az version
+
+      # Installing Terraform
+      - name: Installing Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: latest
+
+      # Terraform Init
+      - name: Terraform Init
+        id: init
+        run: terraform init
+
+      # Terraform Format
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt -check -recursive
+        continue-on-error: true
+
+      # Terraform Validate
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      # Terraform Plan
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -input=false -var '${{ secrets.SSH }}' -var-file 'infra_variables/prod.tfvars'
+
+      # Terraform Apply
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply -auto-approve -input=false -var '${{ secrets.SSH }}' -var-file 'infra_variables/prod.tfvars'

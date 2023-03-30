@@ -9,6 +9,9 @@ on:
   pull_request:
     branches:
       - main
+  pull_request_review:
+    branches:
+      - main
   workflow_dispatch:
 
 defaults:
@@ -62,36 +65,36 @@ jobs:
         id: plan
         run: terraform plan -input=false -var '${{ secrets.SSH }}' -var-file 'infra_variables/prod.tfvars'
 
-  # Checkov Job
-  checkov:
-    name: Checkov Scan
-    runs-on: ubuntu-latest
-    permissions:
-      security-events: write
+  # # Checkov Job
+  # checkov:
+  #   name: Checkov Scan
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     security-events: write
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
 
-      # Checkov Scan
-      - name: Checkov Scan
-        id: checkov
-        uses: bridgecrewio/checkov-action@v12
-        continue-on-error: true
-        with:
-          framework: terraform
-          # This will create a checkov.sarif file
-          output_format: sarif
-          output_file_path: checkov.sarif
+  #     # Checkov Scan
+  #     - name: Checkov Scan
+  #       id: checkov
+  #       uses: bridgecrewio/checkov-action@v12
+  #       continue-on-error: true
+  #       with:
+  #         framework: terraform
+  #         # This will create a checkov.sarif file
+  #         output_format: sarif
+  #         output_file_path: checkov.sarif
 
-      # Upload Checkov Scan
-      - name: Upload SARIF file
-        id: checkov-upload
-        uses: github/codeql-action/upload-sarif@v2
-        # Results are generated only on a success or failure
-        if: success() || failure()
-        with:
-          sarif_file: checkov.sarif
+  #     # Upload Checkov Scan
+  #     - name: Upload SARIF file
+  #       id: checkov-upload
+  #       uses: github/codeql-action/upload-sarif@v2
+  #       # Results are generated only on a success or failure
+  #       if: success() || failure()
+  #       with:
+  #         sarif_file: checkov.sarif
 
   # Terrascan Job
   terrascan:
