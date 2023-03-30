@@ -16,12 +16,12 @@ terraform {
 
     ##################################################
     # Backend configuration
-    # backend "azurerm" {
-    #   resource_group_name  = "rgprpro08"
-    #   storage_account_name = "straprpro08"
-    #   container_name       = "contprpro08"
-    #   key                  = "prod.pro08.tfstate"
-    # }
+    backend "azurerm" {
+      resource_group_name  = "rgprpro08"
+      storage_account_name = "straprpro08"
+      container_name       = "contprpro08"
+      key                  = "prod.pro08.tfstate"
+    }
   }
 }
 

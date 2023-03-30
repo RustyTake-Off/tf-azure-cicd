@@ -6,6 +6,7 @@ resource "azurerm_resource_group" "this" {
   location = var.global.location
 }
 
+##################################################
 # Network - configuration
 resource "azurerm_virtual_network" "this" {
 
@@ -23,6 +24,7 @@ resource "azurerm_subnet" "this" {
   address_prefixes     = var.network.subnet_address_prefixes
 }
 
+##################################################
 # Aks - configuration
 resource "azurerm_user_assigned_identity" "this" {
 
@@ -94,6 +96,7 @@ resource "azurerm_kubernetes_cluster" "this" {
   }
 }
 
+##################################################
 # Log analytics - configuration
 resource "azurerm_log_analytics_workspace" "this" {
 
