@@ -53,6 +53,7 @@ variable "aks" {
   }
 }
 
+# Takes input from secrets at GitHub Actions level
 variable "ssh" {
   description = "Configuration - ssh variables"
   sensitive   = true
