@@ -1,11 +1,11 @@
 ########################################
 # Workflow for checking terraform code
-name: Terraform
+name: Terraform Plan
 
 on:
   push:
     branches:
-      - main
+      - "*"
   pull_request:
     branches:
       - main
