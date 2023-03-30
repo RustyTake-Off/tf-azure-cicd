@@ -7,6 +7,13 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      apply:
+        description: "Run Terraform Apply"
+        default: ""
+      destroy:
+        description: "Run Terraform Destroy"
+        default: ""
 
 defaults:
   run:
@@ -63,3 +70,14 @@ jobs:
       - name: Terraform Apply
         id: apply
         run: terraform apply -auto-approve -input=false -var '${{ secrets.SSH }}' -var-file 'infra_variables/prod.tfvars'
+        if: ${{ github.event.inputs.apply == 'apply' }}
+
+      - name: Delay
+        run: |
+          sleep 20s
+
+      # Terraform Destroy
+      - name: Terraform Destroy
+        id: destroy
+        run: terraform destroy -auto-approve -input=false -var '${{ secrets.SSH }}' -var-file 'infra_variables/prod.tfvars'
+        if: ${{ github.event.inputs.destroy == 'destroy' }}
