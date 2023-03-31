@@ -40,13 +40,6 @@ resource "azurerm_role_assignment" "thisone" {
   scope                = azurerm_resource_group.this.id
 }
 
-resource "azurerm_role_assignment" "thistwo" {
-
-  principal_id         = azurerm_user_assigned_identity.this.principal_id
-  role_definition_name = "Contributor"
-  scope                = data.azurerm_resource_group.node_rg.id
-}
-
 resource "azurerm_kubernetes_cluster" "this" {
 
   name                = lower("aks-${var.global.suffix}")
@@ -58,7 +51,7 @@ resource "azurerm_kubernetes_cluster" "this" {
   azure_policy_enabled             = true
   automatic_channel_upgrade        = var.aks.auto_channel_upgrade
   sku_tier                         = var.aks.sku_tier
-  http_application_routing_enabled = try(var.aks.AksHTTPAppRouting, false)
+  http_application_routing_enabled = try(var.aks.aks_http_app_routing, false)
 
   default_node_pool {
     name            = lower(var.aks.dnp_name)

@@ -16,4 +16,5 @@ aks = {
   dnp_name             = "default"
   node_count           = 1
   vm_size              = "Standard_D2_v2"
+  aks_http_app_routing = true
 }
