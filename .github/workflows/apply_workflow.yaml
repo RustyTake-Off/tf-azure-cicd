@@ -72,11 +72,6 @@ jobs:
         run: terraform apply -auto-approve -input=false -var '${{ secrets.SSH }}' -var-file 'infra_variables/prod.tfvars'
         if: ${{ github.event.inputs.apply == 'true' }}
 
-      - name: Delay
-        run: |
-          sleep 20s
-        if: ${{ github.event.inputs.apply == 'true' }}
-
       # Terraform Destroy
       - name: Terraform Destroy
         id: destroy
