@@ -6,6 +6,8 @@ on:
   push:
     branches:
       - "*"
+    paths:
+      - infra
   pull_request:
     branches:
       - main

@@ -10,7 +10,7 @@ on:
     inputs:
       apply:
         description: "Run Terraform Apply / 'true' - to run / leave empty to not run"
-        default: ""
+        default: "true"
       destroy:
         description: "Run Terraform Destroy / 'true' - to run / leave empty to not run"
         default: ""
