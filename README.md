@@ -4,7 +4,7 @@ Remember to look around all the folders, files and change things to your own lik
 
 ## [Projects](https://github.com/RustyTake-Off/projects)
 
-[Mini Project] - Create Azure infrastructure with Terraform and automate the validation, testing and deployment of it with GitHub Actions.
+[Project] - Create Azure infrastructure with Terraform and automate the validation, testing and deployment of it with GitHub Actions.
 
 ## Prerequisites
 
